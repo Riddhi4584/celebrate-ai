@@ -4,6 +4,15 @@
 
 ---
 
+## 🎥 Screen Recordings & Live Demo
+
+- **Live Production Application**: [https://celebrate-ai-self.vercel.app](https://celebrate-ai-self.vercel.app)
+- **Complete Product Tour Recording (WebP Video)**: [recordings/celebrate_ai_walkthrough.webp](recordings/celebrate_ai_walkthrough.webp)
+- **6-Step Creation Wizard Live Demo (WebP Video)**: [recordings/celebrate_ai_wizard_creation_demo.webp](recordings/celebrate_ai_wizard_creation_demo.webp)
+- **Curated Screenshots**: [screenshots/](screenshots/)
+
+---
+
 ## 🌟 Key Features
 
 ### 1. Public Landing Page
