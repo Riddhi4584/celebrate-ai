@@ -13,10 +13,9 @@ import {
   Edit3,
   Save,
   CheckCircle2,
-  Info,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
-import { formatCurrency, formatDate } from '../utils/formatters';
+import { formatCurrency } from '../utils/formatters';
 
 export const EventPlanPage: React.FC = () => {
   const { activeEvent, updateEvent, regeneratePlan } = useEventContext();

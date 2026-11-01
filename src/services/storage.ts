@@ -420,17 +420,18 @@ export class StorageService {
       const data = localStorage.getItem(STORAGE_KEY_EVENTS);
       if (!data) {
         // Initialize with realistic rich demo events
-        this.saveAllEvents(INITIAL_DEMO_EVENTS);
-        return INITIAL_DEMO_EVENTS;
+        const cloned = JSON.parse(JSON.stringify(INITIAL_DEMO_EVENTS));
+        this.saveAllEvents(cloned);
+        return cloned;
       }
       const parsed = JSON.parse(data);
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed;
       }
-      return INITIAL_DEMO_EVENTS;
+      return JSON.parse(JSON.stringify(INITIAL_DEMO_EVENTS));
     } catch (e) {
       console.error('Failed reading events from localStorage:', e);
-      return INITIAL_DEMO_EVENTS;
+      return JSON.parse(JSON.stringify(INITIAL_DEMO_EVENTS));
     }
   }
 
@@ -464,8 +465,9 @@ export class StorageService {
   }
 
   static resetToDemoData(): CelebrationEvent[] {
-    this.saveAllEvents(INITIAL_DEMO_EVENTS);
-    return INITIAL_DEMO_EVENTS;
+    const cloned = JSON.parse(JSON.stringify(INITIAL_DEMO_EVENTS));
+    this.saveAllEvents(cloned);
+    return cloned;
   }
 
   static getSettings(): AppSettings {

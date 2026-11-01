@@ -5,17 +5,10 @@ import {
   Search,
   Download,
   Upload,
-  CheckCircle2,
-  Clock,
-  XCircle,
-  HelpCircle,
   Trash2,
   Edit2,
   X,
-  FileSpreadsheet,
   ShieldCheck,
-  UserCheck,
-  Heart,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { DietaryPreference, Guest, GuestGroup, RsvpStatus } from '../types';
@@ -310,6 +303,7 @@ export const GuestsPage: React.FC = () => {
             <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              aria-label="Search guest name or notes"
               placeholder="Search guest name or notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -319,6 +313,7 @@ export const GuestsPage: React.FC = () => {
 
           <select
             value={filterGroup}
+            aria-label="Filter guests by group"
             onChange={(e) => setFilterGroup(e.target.value)}
             className="px-3 py-2 rounded-xl text-xs font-semibold border border-stone-200 bg-[#FAF8F5] text-stone-700 outline-none"
           >
@@ -332,6 +327,7 @@ export const GuestsPage: React.FC = () => {
 
           <select
             value={filterRsvp}
+            aria-label="Filter guests by RSVP status"
             onChange={(e) => setFilterRsvp(e.target.value)}
             className="px-3 py-2 rounded-xl text-xs font-semibold border border-stone-200 bg-[#FAF8F5] text-stone-700 outline-none"
           >
@@ -411,6 +407,7 @@ export const GuestsPage: React.FC = () => {
                           onClick={() => handleOpenEdit(guest)}
                           className="text-stone-400 hover:text-[#2D1236] p-1"
                           title="Edit"
+                          aria-label={`Edit guest ${guest.name}`}
                         >
                           <Edit2 className="w-3.5 h-3.5 inline" />
                         </button>
@@ -418,6 +415,7 @@ export const GuestsPage: React.FC = () => {
                           onClick={() => deleteGuest(guest.id)}
                           className="text-stone-400 hover:text-rose-600 p-1"
                           title="Delete"
+                          aria-label={`Delete guest ${guest.name}`}
                         >
                           <Trash2 className="w-3.5 h-3.5 inline" />
                         </button>
@@ -433,14 +431,20 @@ export const GuestsPage: React.FC = () => {
 
       {/* Add / Edit Guest Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="guest-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in"
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-stone-200 space-y-5">
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <h3 className="font-serif text-xl font-bold text-[#2D1236]">
+              <h3 id="guest-modal-title" className="font-serif text-xl font-bold text-[#2D1236]">
                 {editingGuest ? 'Edit Guest' : 'Add Guest to List'}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
+                aria-label="Close guest modal"
                 className="text-stone-400 hover:text-[#2D1236]"
               >
                 <X className="w-5 h-5" />

@@ -7,13 +7,10 @@ import {
   Mail,
   Calendar,
   CheckCircle2,
-  DollarSign,
   Trash2,
   Edit2,
   X,
-  ExternalLink,
   Sparkles,
-  AlertCircle,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { Vendor, VendorStatus } from '../types';
@@ -350,6 +347,7 @@ export const VendorsPage: React.FC = () => {
                       onClick={() => deleteVendor(vendor.id)}
                       className="p-1.5 rounded-xl text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                       title="Delete"
+                      aria-label={`Delete vendor ${vendor.name}`}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

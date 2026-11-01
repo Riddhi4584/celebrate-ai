@@ -16,7 +16,6 @@ import {
   ChevronDown,
   FileText,
   Calendar,
-  PartyPopper,
 } from 'lucide-react';
 import { useEventContext } from '../../context/EventContext';
 import { calculateReadinessScore } from '../../services/readinessScore';
@@ -107,12 +106,15 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
               onClick={() => setShowSummaryModal(true)}
               className="p-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-medium"
               title="Quick Summary"
+              aria-label="View quick executive summary"
             >
               <FileText className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
             className="p-2 rounded-lg text-stone-700 hover:bg-stone-100"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -142,6 +144,9 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
           <div className="relative">
             <button
               onClick={() => setSwitcherOpen(!switcherOpen)}
+              aria-label="Switch active celebration event"
+              aria-expanded={switcherOpen}
+              aria-haspopup="listbox"
               className="w-full text-left p-3 rounded-2xl bg-[#FAF8F5] border border-stone-200 hover:border-[#E05368]/40 transition-colors flex items-center justify-between group"
             >
               <div className="truncate pr-2">

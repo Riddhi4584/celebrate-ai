@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import {
   Sparkles,
@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   Calendar,
   Check,
-  Building,
   DollarSign,
   Users,
   Palette,
@@ -76,7 +75,7 @@ export const CreateEventWizard: React.FC = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   // Form State
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState(() => ({
     title: '',
     eventType: (searchParams.get('type') as EventType) || 'wedding',
     date: new Date(Date.now() + 45 * 86400000).toISOString().split('T')[0],
@@ -102,18 +101,19 @@ export const CreateEventWizard: React.FC = () => {
     specialRequests: '',
 
     priorities: ['venue', 'food', 'decorations'] as EventPriority[],
-  });
-
-  // Pre-seed default budget when eventType changes
-  useEffect(() => {
-    const typeObj = EVENT_TYPES.find((t) => t.id === formData.eventType);
-    if (typeObj && formData.totalBudget === 800000) {
-      setFormData((prev) => ({ ...prev, totalBudget: typeObj.defaultBudget }));
-    }
-  }, [formData.eventType]);
+  }));
 
   const updateField = (field: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (field === 'eventType') {
+      const typeObj = EVENT_TYPES.find((t) => t.id === value);
+      setFormData((prev) => ({
+        ...prev,
+        eventType: value,
+        totalBudget: typeObj ? typeObj.defaultBudget : prev.totalBudget,
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    }
     setErrorMsg('');
   };
 

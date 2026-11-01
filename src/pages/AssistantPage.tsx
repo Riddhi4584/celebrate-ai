@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   Sparkles,
   Send,
@@ -6,7 +6,6 @@ import {
   User,
   Copy,
   Check,
-  RefreshCw,
   CheckCircle2,
   AlertTriangle,
   ArrowRight,
@@ -27,6 +26,10 @@ const SUGGESTED_PROMPTS = [
   'Suggest outdoor photo-op and lighting ideas',
 ];
 
+const getCurrentTimeString = (): string => {
+  return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
+
 export const AssistantPage: React.FC = () => {
   const { activeEvent, updateEvent, applyStructuredProposal, settings } = useEventContext();
   const [inputMessage, setInputMessage] = useState('');
@@ -35,20 +38,21 @@ export const AssistantPage: React.FC = () => {
   const [previewProposal, setPreviewProposal] = useState<StructuredProposal | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatLength = activeEvent?.chatHistory?.length || 0;
+
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatLength, isTyping, scrollToBottom]);
 
   if (!activeEvent) {
     return <div className="p-8 text-center text-stone-500">Please select an event.</div>;
   }
 
   const messages = activeEvent.chatHistory || [];
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
 
   const handleSend = async (messageText?: string) => {
     const textToSend = messageText || inputMessage;
@@ -58,7 +62,7 @@ export const AssistantPage: React.FC = () => {
       id: generateId('msg'),
       sender: 'user',
       content: textToSend,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: getCurrentTimeString(),
     };
 
     const updatedHistory = [...messages, userMsg];
@@ -87,7 +91,7 @@ export const AssistantPage: React.FC = () => {
         id: generateId('msg'),
         sender: 'ai',
         content: "I encountered a minor issue processing your query, but I'm still ready to help. Try asking about budget optimizations, menu suggestions, or rain contingencies!",
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        timestamp: getCurrentTimeString(),
       };
       updateEvent({
         ...activeEvent,
@@ -273,6 +277,7 @@ export const AssistantPage: React.FC = () => {
       <div className="bg-white rounded-2xl p-2 border border-stone-200/90 shadow-sm flex items-center gap-2 shrink-0">
         <input
           type="text"
+          aria-label="Ask CelebrateAI assistant a question"
           placeholder="Ask a question about your celebration, budget cuts, tasks, or menus..."
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
@@ -285,6 +290,7 @@ export const AssistantPage: React.FC = () => {
         <button
           onClick={() => handleSend()}
           disabled={!inputMessage.trim() || isTyping}
+          aria-label="Send message to AI assistant"
           className="p-3 rounded-xl bg-gradient-to-r from-[#E05368] to-[#D43D56] hover:brightness-105 text-white disabled:opacity-40 transition-all shadow-xs"
         >
           <Send className="w-4 h-4" />
@@ -293,14 +299,19 @@ export const AssistantPage: React.FC = () => {
 
       {/* Confirmation Modal Before Applying Structured Proposals */}
       {previewProposal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="assistant-modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in"
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-stone-200 space-y-5">
             <div className="flex items-center gap-3 border-b border-stone-100 pb-3">
               <div className="w-10 h-10 rounded-xl bg-[#FAF0F2] text-[#E05368] flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-serif text-xl font-bold text-[#2D1236]">Confirm Plan Adjustment</h3>
+                <h3 id="assistant-modal-title" className="font-serif text-xl font-bold text-[#2D1236]">Confirm Plan Adjustment</h3>
                 <p className="text-xs text-stone-500">CelebrateAI will update your live workspace data</p>
               </div>
             </div>

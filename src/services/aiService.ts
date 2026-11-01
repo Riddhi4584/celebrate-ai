@@ -132,7 +132,7 @@ export class AiPlanningEngine {
    */
   static generateInitialExpenses(
     categories: BudgetCategory[],
-    tier: string = 'balanced'
+    _tier: string = 'balanced'
   ): Expense[] {
     const expenses: Expense[] = [];
 
@@ -205,7 +205,7 @@ export class AiPlanningEngine {
       return taskDate.toISOString().split('T')[0];
     };
 
-    const type = event.eventType || 'birthday';
+    const type = event.eventType || 'celebration';
     const city = event.city || 'your city';
 
     const tasks: Task[] = [
@@ -231,7 +231,7 @@ export class AiPlanningEngine {
       },
       {
         id: generateId('tsk'),
-        title: 'Select theme mood board and color swatches',
+        title: `Select theme mood board and color swatches for ${type}`,
         description: `Align decor rentals with the chosen ${event.preferences?.theme || 'elegant'} palette.`,
         dueDate: getMilestoneDate(0.6),
         priority: 'medium',
@@ -508,7 +508,7 @@ export class AiPlanningEngine {
   static async processUserChat(
     userMessage: string,
     event: CelebrationEvent,
-    apiKey?: string
+    _apiKey?: string
   ): Promise<ChatMessage> {
     const lower = userMessage.toLowerCase();
     const city = event.city || 'your city';

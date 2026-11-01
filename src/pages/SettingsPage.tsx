@@ -7,10 +7,7 @@ import {
   Key,
   Shield,
   Check,
-  AlertCircle,
   Database,
-  Globe,
-  Sparkles,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { StorageService } from '../services/storage';

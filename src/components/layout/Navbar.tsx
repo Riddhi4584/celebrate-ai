@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Calendar, LayoutDashboard } from 'lucide-react';
-import { useEventContext } from '../../context/EventContext';
 
 export const Navbar: React.FC = () => {
-  const navigate = useNavigate();
-  const { activeEvent } = useEventContext();
 
   return (
     <header className="sticky top-0 z-50 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#2D1236]/10 transition-all">

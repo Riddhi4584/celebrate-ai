@@ -8,7 +8,6 @@ import {
   Calendar,
   MapPin,
   Users,
-  DollarSign,
   AlertTriangle,
   ListTodo,
   Store,
@@ -22,6 +21,8 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const getReportDateString = (): string => new Date().toLocaleDateString();
 
 export const OneClickSummaryModal: React.FC<Props> = ({ event, isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
@@ -41,7 +42,7 @@ export const OneClickSummaryModal: React.FC<Props> = ({ event, isOpen, onClose }
 
   const generateMarkdownSummary = (): string => {
     return `# 🌟 CELEBRATEAI EVENT EXECUTIVE SUMMARY: ${event.title.toUpperCase()}
-Generated on: ${new Date().toLocaleDateString()}
+Generated on: ${getReportDateString()}
 ------------------------------------------------------------
 📍 Location: ${event.city} ${event.venueName ? `(${event.venueName})` : ''}
 📅 Date: ${formatDate(event.date)} [${daysInfo.label}]
@@ -95,7 +96,12 @@ Planned with CelebrateAI — Intelligent Event Planning Engine
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="summary-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+    >
       <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-stone-200 overflow-hidden">
         {/* Header */}
         <div className="p-6 bg-gradient-to-r from-[#2D1236] to-[#431A50] text-white flex items-center justify-between">
@@ -104,12 +110,13 @@ Planned with CelebrateAI — Intelligent Event Planning Engine
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-serif text-xl font-bold">One-Click Planning Summary</h3>
+              <h3 id="summary-modal-title" className="font-serif text-xl font-bold">One-Click Planning Summary</h3>
               <p className="text-xs text-stone-300">Executive brief ready to share with family, clients, or vendors</p>
             </div>
           </div>
           <button
             onClick={onClose}
+            aria-label="Close summary modal"
             className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white"
           >
             <X className="w-5 h-5" />

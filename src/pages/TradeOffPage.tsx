@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import {
   Scale,
-  Sparkles,
-  ArrowRight,
   CheckCircle2,
   XCircle,
   TrendingDown,
   TrendingUp,
-  DollarSign,
-  PlusCircle,
   HelpCircle,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
@@ -16,14 +12,14 @@ import { TradeOffOption } from '../types';
 import { formatCurrency } from '../utils/formatters';
 
 export const TradeOffPage: React.FC = () => {
-  const { activeEvent, updateEvent } = useEventContext();
+  const { activeEvent } = useEventContext();
   const [selectedTradeOffId, setSelectedTradeOffId] = useState<string | null>(null);
 
   if (!activeEvent) {
     return <div className="p-8 text-center text-stone-500">Please select an event.</div>;
   }
 
-  const tradeOffs = activeEvent.plan?.tradeOffOptions || [
+  const tradeOffs: TradeOffOption[] = activeEvent.plan?.tradeOffOptions || [
     {
       id: 'trade_venue_vs_decor',
       title: 'Option A: Luxury Ballroom vs. Boutique Garden with Enhanced Fairy Lights',

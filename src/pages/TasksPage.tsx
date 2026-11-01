@@ -2,18 +2,12 @@ import React, { useState } from 'react';
 import {
   ListTodo,
   PlusCircle,
-  CheckCircle2,
   Calendar,
-  Clock,
-  AlertCircle,
   Trash2,
   Edit2,
-  Filter,
   Check,
   X,
   User,
-  ArrowUpDown,
-  Sparkles,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { Task } from '../types';
@@ -292,6 +286,7 @@ export const TasksPage: React.FC = () => {
                   <div className="flex items-start gap-3.5 flex-1 min-w-0">
                     <button
                       onClick={() => toggleTaskComplete(task.id)}
+                      aria-label={`Mark task ${task.title} as ${task.isCompleted ? 'incomplete' : 'completed'}`}
                       className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 transition-all ${
                         task.isCompleted
                           ? 'bg-emerald-600 border-emerald-600 text-white'
@@ -369,6 +364,7 @@ export const TasksPage: React.FC = () => {
                       onClick={() => handleOpenEditModal(task)}
                       className="text-stone-400 hover:text-[#2D1236] p-1"
                       title="Edit Task"
+                      aria-label={`Edit task ${task.title}`}
                     >
                       <Edit2 className="w-3.5 h-3.5" />
                     </button>
@@ -377,6 +373,7 @@ export const TasksPage: React.FC = () => {
                       onClick={() => deleteTask(task.id)}
                       className="text-stone-400 hover:text-rose-600 p-1"
                       title="Delete Task"
+                      aria-label={`Delete task ${task.title}`}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+/* eslint-disable react/only-export-components */
+import React, { createContext, useState } from 'react';
 import confetti from 'canvas-confetti';
 import {
   AppSettings,
@@ -48,7 +49,7 @@ interface EventContextType {
   regeneratePlan: () => void;
 }
 
-const EventContext = createContext<EventContextType | undefined>(undefined);
+export const EventContext = createContext<EventContextType | undefined>(undefined);
 
 export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [events, setEvents] = useState<CelebrationEvent[]>(() => StorageService.getAllEvents());
@@ -451,10 +452,4 @@ export const EventProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   );
 };
 
-export const useEventContext = () => {
-  const context = useContext(EventContext);
-  if (!context) {
-    throw new Error('useEventContext must be used within an EventProvider');
-  }
-  return context;
-};
+export { useEventContext } from './useEventContext';

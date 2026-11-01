@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Calendar,
   PieChart,
-  ListTodo,
   Store,
   ShieldCheck,
   CheckCircle2,
@@ -13,22 +12,18 @@ import {
   Heart,
   Palette,
   Clock,
-  HelpCircle,
   Gem,
   Cake,
-  Building,
   Users,
   GraduationCap,
   Briefcase,
   Flame,
   Star,
-  Quote,
 } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 
 export const LandingPage: React.FC = () => {
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const celebrationTypes = [
@@ -304,7 +299,7 @@ export const LandingPage: React.FC = () => {
               return (
                 <div key={idx} className="relative p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200/80 space-y-4 hover:shadow-lg transition-all">
                   <div className="w-12 h-12 rounded-2xl bg-white border border-stone-200 flex items-center justify-center text-[#E05368] shadow-2xs font-mono font-bold text-sm">
-                    {st.step}
+                    <Icon className="w-5 h-5" />
                   </div>
                   <h3 className="font-serif text-lg font-bold text-[#2D1236]">{st.title}</h3>
                   <p className="text-sm text-stone-600 leading-relaxed">{st.desc}</p>
@@ -327,7 +322,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {celebrationTypes.map((cat, idx) => {
+            {celebrationTypes.map((cat) => {
               const Icon = cat.icon;
               return (
                 <Link

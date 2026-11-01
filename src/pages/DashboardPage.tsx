@@ -10,27 +10,26 @@ import {
   ArrowRight,
   PlusCircle,
   AlertTriangle,
-  TrendingUp,
-  Store,
-  Users,
-  ChevronRight,
   PartyPopper,
-  ShieldCheck,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { calculateReadinessScore } from '../services/readinessScore';
 import { formatCurrency, formatDate, getDaysRemaining } from '../utils/formatters';
 
-export const DashboardPage: React.FC = () => {
-  const { events, activeEvent, setActiveEventId, toggleTaskComplete } = useEventContext();
-  const navigate = useNavigate();
-
-  const todayStr = new Date().toLocaleDateString('en-US', {
+const getTodayFormattedString = (): string => {
+  return new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'short',
     day: 'numeric',
     year: 'numeric',
   });
+};
+
+export const DashboardPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { events, activeEvent, setActiveEventId, toggleTaskComplete } = useEventContext();
+
+  const todayStr = getTodayFormattedString();
 
   // Calculate real metrics across state
   const totalEvents = events.length;
@@ -46,7 +45,6 @@ export const DashboardPage: React.FC = () => {
   );
 
   const activeReadiness = activeEvent ? calculateReadinessScore(activeEvent) : null;
-  const activeDays = activeEvent ? getDaysRemaining(activeEvent.date) : null;
 
   // Real upcoming deadlines across all events or active event
   const allPendingTasks = (activeEvent ? activeEvent.tasks : events.flatMap((e) => e.tasks))

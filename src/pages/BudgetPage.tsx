@@ -16,18 +16,16 @@ import {
   PlusCircle,
   AlertTriangle,
   CheckCircle2,
-  PieChart as PieIcon,
   Trash2,
   Edit2,
   X,
   CreditCard,
-  ArrowUpRight,
   TrendingDown,
   Info,
 } from 'lucide-react';
 import { useEventContext } from '../context/EventContext';
 import { Expense } from '../types';
-import { formatCurrency, formatDate } from '../utils/formatters';
+import { formatCurrency } from '../utils/formatters';
 
 const CHART_COLORS = ['#E05368', '#9C88FF', '#D4AF37', '#06B6D4', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899'];
 
@@ -55,7 +53,6 @@ export const BudgetPage: React.FC = () => {
 
   // --- Accurate Budget Calculations ---
   const totalBudget = activeEvent.totalBudget;
-  const totalAllocated = activeEvent.categories.reduce((sum, c) => sum + (c.allocatedAmount || 0), 0);
   
   // Total actual spent: only counts actualCost of paid expenses, or recorded actual cost
   const totalPaidSpent = activeEvent.expenses
@@ -217,6 +214,7 @@ export const BudgetPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <input
                 type="number"
+                aria-label="Total budget cap amount"
                 value={newTotalBudget}
                 onChange={(e) => setNewTotalBudget(Number(e.target.value))}
                 className="w-full px-2 py-1 text-sm font-bold border border-[#E05368] rounded-lg"
@@ -438,6 +436,7 @@ export const BudgetPage: React.FC = () => {
                                   paidDate: !exp.isPaid ? new Date().toISOString() : undefined,
                                 });
                               }}
+                              aria-label={`Toggle payment for ${exp.title}, currently ${exp.isPaid ? 'paid' : 'unpaid'}`}
                               className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase transition-colors ${
                                 exp.isPaid
                                   ? 'bg-emerald-100 text-emerald-800'
@@ -453,6 +452,7 @@ export const BudgetPage: React.FC = () => {
                               onClick={() => handleOpenEditModal(exp)}
                               className="text-stone-400 hover:text-[#2D1236]"
                               title="Edit"
+                              aria-label={`Edit expense ${exp.title}`}
                             >
                               <Edit2 className="w-3.5 h-3.5 inline" />
                             </button>
@@ -460,6 +460,7 @@ export const BudgetPage: React.FC = () => {
                               onClick={() => deleteExpense(exp.id)}
                               className="text-stone-400 hover:text-rose-600"
                               title="Delete"
+                              aria-label={`Delete expense ${exp.title}`}
                             >
                               <Trash2 className="w-3.5 h-3.5 inline" />
                             </button>
