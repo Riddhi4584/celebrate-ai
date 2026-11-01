@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-warm: #FAF8F5;
+    --text-plum: #2D1236;
+    --accent-coral: #FF6B6B;
+    --accent-rose: #E05368;
+    --accent-gold: #E5A93C;
+    --lavender-soft: #F0ECF8;
+    --card-bg: #FFFFFF;
+  }
+  
+  body {
+    background-color: var(--bg-warm);
+    color: var(--text-plum);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  #root {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
