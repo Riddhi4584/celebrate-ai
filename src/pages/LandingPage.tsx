@@ -64,10 +64,17 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-[#2D1236] flex flex-col font-sans">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#E05368] focus:text-white focus:rounded-xl focus:shadow-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-24 md:pt-20 md:pb-32">
+      <main id="main-content">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden pt-12 pb-24 md:pt-20 md:pb-32">
         {/* Soft background ambient glows */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-[#FF6B6B]/15 via-[#9C88FF]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-10 right-10 w-96 h-96 bg-[#FAF0F2] rounded-full blur-2xl pointer-events-none" />
@@ -565,6 +572,7 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>

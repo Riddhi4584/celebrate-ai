@@ -22,7 +22,7 @@ class LocalStorageMock {
 }
 
 if (typeof globalThis.localStorage === 'undefined') {
-  globalThis.localStorage = new LocalStorageMock() as any;
+  globalThis.localStorage = new LocalStorageMock() as unknown as Storage;
 }
 
 describe('StorageService Persistence & Integrity Suite', () => {

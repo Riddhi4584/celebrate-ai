@@ -308,7 +308,7 @@ export const BudgetPage: React.FC = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value: any) => [formatCurrency(Number(value), activeEvent.currency), 'Allocated']}
+                  formatter={(value: unknown) => [formatCurrency(Number(value), activeEvent.currency), 'Allocated']}
                   contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e5e5e5', fontSize: '12px' }}
                 />
               </RePieChart>
@@ -342,7 +342,7 @@ export const BudgetPage: React.FC = () => {
                 <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#78716c' }} interval={0} angle={-25} textAnchor="end" />
                 <YAxis tick={{ fontSize: 10, fill: '#78716c' }} tickFormatter={(val) => `${val >= 1000 ? `${val / 1000}k` : val}`} />
                 <Tooltip
-                  formatter={(val: any) => [formatCurrency(Number(val), activeEvent.currency)]}
+                  formatter={(val: unknown) => [formatCurrency(Number(val), activeEvent.currency)]}
                   contentStyle={{ backgroundColor: '#fff', borderRadius: '12px', border: '1px solid #e5e5e5', fontSize: '12px' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />

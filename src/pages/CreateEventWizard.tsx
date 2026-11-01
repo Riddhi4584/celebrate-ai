@@ -40,7 +40,7 @@ const STEPS = [
   { id: 6, label: 'Review & Plan', icon: FileCheck },
 ];
 
-const EVENT_TYPES: { id: EventType; label: string; icon: any; defaultBudget: number }[] = [
+const EVENT_TYPES: { id: EventType; label: string; icon: React.ComponentType<{ className?: string }>; defaultBudget: number }[] = [
   { id: 'wedding', label: 'Wedding & Reception', icon: Gem, defaultBudget: 1500000 },
   { id: 'birthday', label: 'Birthday Party', icon: Cake, defaultBudget: 50000 },
   { id: 'anniversary', label: 'Anniversary', icon: Heart, defaultBudget: 100000 },
@@ -103,12 +103,12 @@ export const CreateEventWizard: React.FC = () => {
     priorities: ['venue', 'food', 'decorations'] as EventPriority[],
   }));
 
-  const updateField = (field: string, value: any) => {
+  const updateField = (field: string, value: unknown) => {
     if (field === 'eventType') {
       const typeObj = EVENT_TYPES.find((t) => t.id === value);
       setFormData((prev) => ({
         ...prev,
-        eventType: value,
+        eventType: value as EventType,
         totalBudget: typeObj ? typeObj.defaultBudget : prev.totalBudget,
       }));
     } else {

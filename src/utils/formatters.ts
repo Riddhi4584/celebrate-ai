@@ -54,6 +54,9 @@ export function getDaysRemaining(targetDateString: string): {
   today.setHours(0, 0, 0, 0);
 
   const target = new Date(targetDateString);
+  if (isNaN(target.getTime())) {
+    return { days: 0, label: 'Date not set', isPast: false, isToday: false };
+  }
   target.setHours(0, 0, 0, 0);
 
   const diffTime = target.getTime() - today.getTime();

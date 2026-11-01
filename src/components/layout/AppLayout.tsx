@@ -91,6 +91,13 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] flex flex-col md:flex-row text-[#2D1236]">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#E05368] focus:text-white focus:rounded-xl focus:shadow-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-stone-200 sticky top-0 z-40">
         <Link to="/" className="flex items-center gap-2">
@@ -273,7 +280,7 @@ export const AppLayout: React.FC<Props> = ({ children }) => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 min-h-screen">
+      <main id="main-content" className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top Header Bar */}
         <header className="hidden md:flex h-16 bg-white/80 backdrop-blur-md border-b border-stone-200 items-center justify-between px-8 sticky top-0 z-30">
           <div className="flex items-center gap-4 text-sm">
